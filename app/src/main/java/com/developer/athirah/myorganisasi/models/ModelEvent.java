@@ -11,22 +11,22 @@ import java.util.Map;
 
 public class ModelEvent {
 
-    public enum Status {Open, Ongoing, Cancel, Complete}
+    public enum Status {Ongoing, Cancel, Complete}
 
-    private String uid;
-    private String title;
-    private String description;
-    private String image;
-    private String location;
+    private String uid = "";
+    private String title = "";
+    private String description = "";
+    private String image = "";
+    private String location = "";
 
-    private Date date;
+    private Date date = new Date();
 
     private GeoPoint point;
 
-    private Status status;
+    private Status status = Status.Ongoing;
 
-    private List<String> people;
-    private Map<String, List<String>> task;
+    private List<String> people = new ArrayList<>();
+    private Map<String, List<String>> task = new HashMap<>();
 
     public ModelEvent() {
         // require empty constructor
@@ -99,9 +99,6 @@ public class ModelEvent {
     }
 
     public List<String> getPeople() {
-
-        if (people == null) return new ArrayList<>();
-
         return people;
     }
 
@@ -110,9 +107,6 @@ public class ModelEvent {
     }
 
     public Map<String, List<String>> getTask() {
-
-        if (task == null) return new HashMap<>();
-
         return task;
     }
 

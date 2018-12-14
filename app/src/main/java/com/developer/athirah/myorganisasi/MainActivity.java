@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
 
             case R.id.action_settings:
-                Intent intent = new Intent(this, DetailActivity.class);
-                startActivity(intent);
                 break;
 
             case R.id.action_about:
