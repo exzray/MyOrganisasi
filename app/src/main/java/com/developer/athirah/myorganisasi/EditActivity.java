@@ -177,7 +177,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         _title = title.getText().toString().trim();
         _image = image.getText().toString().trim();
         _location = location.getText().toString().trim();
-        _description = location.getText().toString().trim();
+        _description = description.getText().toString().trim();
         _longitud = longitud.getText().toString().trim();
         _lalitud = lalitud.getText().toString().trim();
     }
