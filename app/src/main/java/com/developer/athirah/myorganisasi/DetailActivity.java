@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.developer.athirah.myorganisasi.adapters.FragmentDetailAdapter;
@@ -15,6 +16,8 @@ import com.developer.athirah.myorganisasi.adapters.RecyclerTaskAdapter;
 import com.developer.athirah.myorganisasi.models.ModelEvent;
 import com.developer.athirah.myorganisasi.models.ModelTask;
 import com.developer.athirah.myorganisasi.utilities.EventUtils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -98,6 +101,36 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+
+                firestore.collection("events").document(eventSaved.getUid()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (task.isSuccessful()) onBackPressed();
+
+                    }
+                });
+
+                break;
+
+            case R.id.action_edit:
+
+                Intent intent = new Intent(this, EditActivity.class);
+                intent.putExtra(EditActivity.EXTRA_UID, eventSaved.getUid());
+                startActivity(intent);
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onActivityResult(final int requestCode, int resultCode, @android.support.annotation.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -121,7 +154,7 @@ public class DetailActivity extends AppCompatActivity {
                     if (event != null) {
                         EventUtils utils = EventUtils.getInstance(DetailActivity.this, event);
 
-                        switch (requestCode){
+                        switch (requestCode) {
 
                             case 1:
                             case 2:

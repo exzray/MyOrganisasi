@@ -34,11 +34,6 @@
             android:label="@string/label_detail"
             android:theme="@style/AppTheme.NoAppBar" />
         <activity
-            android:name=".EventActivity"
-            android:exported="true"
-            android:label="@string/label_list_event"
-            android:theme="@style/AppTheme.NoAppBar" />
-        <activity
             android:name=".VolunteerActivity"
             android:label="@string/label_list_volunteer" />
         <activity

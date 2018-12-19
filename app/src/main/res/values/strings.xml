@@ -30,4 +30,11 @@
     <string name="action_delete">Delete</string>
     <string name="text_select">pilih</string>
     <string name="text_calendar">Calendar</string>
+    <string name="text_submit">submit</string>
+
+    <string-array name="status">
+        <item>Ongoing</item>
+        <item>Complete</item>
+        <item>Cancel</item>
+    </string-array>
 </resources>
