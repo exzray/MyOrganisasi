@@ -31,6 +31,9 @@
     <string name="text_select">pilih</string>
     <string name="text_calendar">Calendar</string>
     <string name="text_submit">submit</string>
+    <string name="text_welcome">Selamat Datang</string>
+    <string name="text_email">EMAIL</string>
+    <string name="text_password">PASSWORD</string>
 
     <string-array name="status">
         <item>Ongoing</item>
