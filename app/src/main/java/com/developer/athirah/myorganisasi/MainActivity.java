@@ -17,11 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.developer.athirah.myorganisasi.adapters.FragmentEventAdapter;
 import com.developer.athirah.myorganisasi.adapters.RecyclerEventAdapter;
 import com.developer.athirah.myorganisasi.models.ModelEvent;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tab;
     private ViewPager pager;
 
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private ListenerRegistration listener;
 
@@ -211,7 +212,11 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, "Berjaya keluar!", Toast.LENGTH_SHORT).show();
+                auth.signOut();
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
