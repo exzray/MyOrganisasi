@@ -73,7 +73,7 @@ public class RecyclerTaskAdapter extends RecyclerView.Adapter<RecyclerTaskAdapte
         private ModelTask task;
 
         private TextView title, description, total;
-        private MenuItem add, remove;
+        private MenuItem add, remove, list, edit;
 
         private VH(@NonNull View itemView) {
             super(itemView);
@@ -141,8 +141,8 @@ public class RecyclerTaskAdapter extends RecyclerView.Adapter<RecyclerTaskAdapte
                 }
             });
 
-            remove = menu.add(Menu.NONE, 3, 3, "Senarai sukarelawan");
-            remove.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            list = menu.add(Menu.NONE, 3, 3, "Senarai sukarelawan");
+            list.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     String[] a = new String[utils.getTask(task.getUid()).size()];
@@ -154,6 +154,15 @@ public class RecyclerTaskAdapter extends RecyclerView.Adapter<RecyclerTaskAdapte
                     activity.startActivityForResult(intent, 3);
 
                     return true;
+                }
+            });
+
+            edit = menu.add(Menu.NONE, 3, 3, "Senarai sukarelawan");
+            edit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    return false;
                 }
             });
         }

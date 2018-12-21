@@ -28,11 +28,11 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private static ModelEvent EVENT;
 
+    private String _title, _image, _location, _description, _longitud, _lalitud, _status;
+
     private EditText title, image, location, date, description, longitud, lalitud;
     private Button sdate, submit;
     private Spinner status;
-
-    private String _title, _image, _location, _description, _longitud, _lalitud, _status;
 
     FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
@@ -103,7 +103,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
         } else {
             EVENT.setDate(future.getTime());
-            updateUI();
+            date.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(future.getTime()));
         }
     }
 

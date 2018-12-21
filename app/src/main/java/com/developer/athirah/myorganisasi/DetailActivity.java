@@ -3,12 +3,14 @@ package com.developer.athirah.myorganisasi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.developer.athirah.myorganisasi.adapters.FragmentDetailAdapter;
@@ -32,7 +34,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     public static final String EXTRA_UID = "uid";
     public static final List<ModelTask> TASKS = new ArrayList<>();
@@ -45,6 +47,7 @@ public class DetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tab;
     private ViewPager pager;
+    private FloatingActionButton fab;
 
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private ListenerRegistration listenerEvent;
@@ -62,6 +65,7 @@ public class DetailActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         tab = findViewById(R.id.detail_tab);
         pager = findViewById(R.id.detail_pager);
+        fab = findViewById(R.id.fab);
 
         initUI();
     }
@@ -183,12 +187,29 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        if (i == 1) fab.animate().alpha(1).start();
+        else fab.animate().alpha(0).start();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+
     private void initUI() {
         // setup activity to use support action bar
         setSupportActionBar(toolbar);
 
         // setup swipe tab
         pager.setAdapter(adapter);
+        pager.addOnPageChangeListener(this);
         tab.setupWithViewPager(pager);
 
         adapter.setAdapter(taskAdapter);
