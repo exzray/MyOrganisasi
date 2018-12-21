@@ -55,6 +55,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:background="@color/red_600"
+            android:onClick="onClickDelete"
             android:text="@string/action_delete"
             android:textColor="@color/white" />
     </LinearLayout>
