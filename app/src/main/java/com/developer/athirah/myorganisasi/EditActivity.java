@@ -1,13 +1,11 @@
 package com.developer.athirah.myorganisasi;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,11 +16,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
-public class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, DatePickerDialog.OnDateSetListener, OnCompleteListener<DocumentSnapshot> {
+public class EditActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, OnCompleteListener<DocumentSnapshot> {
 
     public static final String EXTRA_UID = "uid";
 
@@ -30,7 +30,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private String _title, _image, _location, _description, _longitud, _lalitud, _status;
 
-    private EditText title, image, location, date, description, longitud, lalitud;
+    private EditText title, image, location, f_date, description, longitud, lalitud;
     private Button sdate, submit;
     private Spinner status;
 
@@ -48,7 +48,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         location = findViewById(R.id.location);
         longitud = findViewById(R.id.longitud);
         lalitud = findViewById(R.id.latitud);
-        date = findViewById(R.id.date);
+        f_date = findViewById(R.id.date);
         sdate = findViewById(R.id.sdate);
         description = findViewById(R.id.description);
         submit = findViewById(R.id.submit);
@@ -72,9 +72,35 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if (v.equals(sdate)) {
 
-            DatePickerDialog dialog = new DatePickerDialog(this);
-            dialog.setOnDateSetListener(this);
-            dialog.show();
+            final SwitchDateTimeDialogFragment dialogFragment = SwitchDateTimeDialogFragment.newInstance("Pilih masa anda", "Terima", "Batal");
+            dialogFragment.startAtCalendarView();
+            dialogFragment.set24HoursMode(true);
+            dialogFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonClickListener() {
+
+                @Override
+                public void onPositiveButtonClick(Date date) {
+                    Calendar now = Calendar.getInstance();
+
+                    Calendar future = Calendar.getInstance();
+                    future.setTime(date);
+
+                    if (future.before(now)) {
+                        Toast.makeText(EditActivity.this, "Invalid date to choose!", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        f_date.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(date));
+                        EVENT.setDate(date);
+                    }
+                }
+
+                @Override
+                public void onNegativeButtonClick(Date date) {
+                    dialogFragment.dismiss();
+                }
+            });
+
+
+            dialogFragment.show(getSupportFragmentManager(), "dialog_time");
 
         } else if (v.equals(submit)) {
             collectData();
@@ -86,24 +112,6 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
             } else {
                 Toast.makeText(this, "All field must be fill!", Toast.LENGTH_SHORT).show();
             }
-        }
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar now = Calendar.getInstance();
-
-        Calendar future = Calendar.getInstance();
-        future.set(Calendar.YEAR, year);
-        future.set(Calendar.MONTH, month);
-        future.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        if (future.before(now)) {
-            Toast.makeText(this, "Invalid date to choose!", Toast.LENGTH_SHORT).show();
-
-        } else {
-            EVENT.setDate(future.getTime());
-            date.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(future.getTime()));
         }
     }
 
@@ -133,7 +141,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         image.setText(EVENT.getImage());
         location.setText(EVENT.getLocation());
         description.setText(EVENT.getDescription());
-        date.setText(DateFormat.getDateInstance(DateFormat.MEDIUM).format(EVENT.getDate()));
+        f_date.setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(EVENT.getDate()));
 
         switch (EVENT.getStatus()) {
             case Ongoing:
@@ -155,7 +163,7 @@ public class EditActivity extends AppCompatActivity implements AdapterView.OnIte
         status.setEnabled(state);
         sdate.setEnabled(state);
         submit.setEnabled(state);
-        date.setEnabled(state);
+        f_date.setEnabled(state);
     }
 
     private void isCreateNew() {

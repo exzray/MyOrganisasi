@@ -4,6 +4,7 @@ import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,6 +92,13 @@ public class ModelEvent {
     }
 
     public Status getStatus() {
+
+        Calendar now = Calendar.getInstance();
+        Calendar future = Calendar.getInstance();
+        future.setTime(date);
+
+        if (future.before(now)) status = Status.Complete;
+
         return status;
     }
 

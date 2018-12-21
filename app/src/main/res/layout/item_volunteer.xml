@@ -5,13 +5,6 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/itemvolunteer_image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_marginEnd="6dp" />
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

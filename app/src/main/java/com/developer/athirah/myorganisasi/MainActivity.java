@@ -21,6 +21,7 @@ import android.view.View;
 import com.developer.athirah.myorganisasi.adapters.FragmentEventAdapter;
 import com.developer.athirah.myorganisasi.adapters.RecyclerEventAdapter;
 import com.developer.athirah.myorganisasi.models.ModelEvent;
+import com.developer.athirah.myorganisasi.utilities.EventUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
