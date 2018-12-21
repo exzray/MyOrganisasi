@@ -34,6 +34,10 @@
     <string name="text_welcome">Selamat Datang</string>
     <string name="text_email">EMAIL</string>
     <string name="text_password">PASSWORD</string>
+    <string name="hint_title">TAJUK</string>
+    <string name="hint_limit">LIMIT</string>
+    <string name="hint_description">DESCRIPTION</string>
+    <string name="text_reset">reset</string>
 
     <string-array name="status">
         <item>Ongoing</item>

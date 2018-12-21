@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.athirah.myorganisasi.DetailActivity;
+import com.developer.athirah.myorganisasi.MainActivity;
 import com.developer.athirah.myorganisasi.R;
+import com.developer.athirah.myorganisasi.TaskActivity;
 import com.developer.athirah.myorganisasi.VolunteerActivity;
 import com.developer.athirah.myorganisasi.models.ModelEvent;
 import com.developer.athirah.myorganisasi.models.ModelTask;
@@ -157,12 +159,19 @@ public class RecyclerTaskAdapter extends RecyclerView.Adapter<RecyclerTaskAdapte
                 }
             });
 
-            edit = menu.add(Menu.NONE, 3, 3, "Senarai sukarelawan");
+            edit = menu.add(Menu.NONE, 4, 4, "Edit tugasan");
             edit.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    return false;
+
+                    Intent intent = new Intent(activity, TaskActivity.class);
+                    intent.putExtra(TaskActivity.EXTRA_EVENT_UID, event.getUid());
+                    intent.putExtra(TaskActivity.EXTRA_TASK_UID, task.getUid());
+
+                    activity.startActivity(intent);
+
+                    return true;
                 }
             });
         }

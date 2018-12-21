@@ -213,6 +213,17 @@ public class DetailActivity extends AppCompatActivity implements ViewPager.OnPag
         tab.setupWithViewPager(pager);
 
         adapter.setAdapter(taskAdapter);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, TaskActivity.class);
+                intent.putExtra(TaskActivity.EXTRA_EVENT_UID, eventSaved.getUid());
+
+                startActivity(intent);
+            }
+        });
     }
 
     private void getEventDetail(String uid) {
